@@ -1,0 +1,149 @@
+.app {
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: white;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+}
+
+.tab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.tab.active {
+  background: #4f46e5;
+  color: white;
+}
+
+.tab.replay {
+  background: #4f46e5;
+  color: white;
+}
+
+.tab.replay:hover {
+  background: #4338ca;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 2rem;
+  width: 100%;
+  padding: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/*
+ * The wrapper takes the card's width and derives its height from the canvas
+ * aspect ratio, so the canvas box hugs the character at any card size.
+ */
+.canvas-wrap {
+  width: 100%;
+  aspect-ratio: 540 / 404;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/*
+ * The character canvas is always EXPANDED_W x EXPANDED_H and is centred inside
+ * a frame that shrinks with the expand state. These used to be Tailwind
+ * utilities, but Tailwind isn't a dependency here — with the classes inert the
+ * canvas fell into normal flow at the frame's top-left and the
+ * translate(-50%, -50%) pushed half of it out of the corner.
+ *
+ * The canvas fills its frame rather than sitting at a fixed 540px, because a
+ * 540px canvas overflowed the ~270px card and overflow:hidden clipped ~60px off
+ * each side of the body.
+ */
+.mochi-frame {
+  position: relative;
+  width: 100%;
+  /*
+   * Height comes from the aspect ratio, not from `height: 100%`. The roll card
+   * nests this frame inside an auto-height column, and a percentage height
+   * against an auto-height parent collapses to 0 — taking the canvas with it.
+   */
+  aspect-ratio: 540 / 404;
+  height: auto;
+  transform-origin: center center;
+  transition-property: transform;
+}
+
+.mochi-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.roll-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
